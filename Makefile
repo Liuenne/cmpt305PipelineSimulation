@@ -1,8 +1,8 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -O2 -Wall -Wextra
+CXXFLAGS = -std=c++17 -O2 -Wall -Wextra
 
-proj: pipeline.cpp pipeline.h
-	$(CXX) $(CXXFLAGS) -o proj pipeline.cpp
+proj: main.cpp stat.h instruction.h depth_config.h
+	$(CXX) $(CXXFLAGS) -o proj main.cpp 
 
 
 clean:

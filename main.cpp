@@ -1,4 +1,6 @@
-#include "pipeline.h"
+#include "instruction.h"
+#include "stat.h"
+#include "depth_config.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) {

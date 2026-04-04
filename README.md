@@ -3,15 +3,15 @@
 A pipeline simulator for a 2-wide superscalar in-order processor. Simulates a 5-stage pipeline (IF, ID, EX, MEM, WB) with four pipeline depth configurations.
 
 # How to Compile
-'''
+```
 make proj
-'''
+```
 
 ---
 ## How to run
-'''
+```
 ./proj <trace_file><start_inst><inst_count><D>
-'''
+```
 
 | Argument | Description |
 |----------|-------------|

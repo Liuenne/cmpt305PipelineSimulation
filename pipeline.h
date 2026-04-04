@@ -22,7 +22,7 @@ struct pipeline{
 
 struct stats {
     
-}
+};
 
 
 #endif

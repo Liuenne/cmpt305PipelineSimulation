@@ -8,6 +8,7 @@
 
 #include "trace.h"
 
+#include <stdexcept>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -20,14 +21,28 @@ bool parse_trace_line(const std::string& line, instruction& inst) {
     inst.pc = std::stoull(token, nullptr, 16);
 
     if (!std::getline(ss, token, ',')) return false;
-    inst.type = static_cast<InstType>(std::stoi(token));
+    int type_value = std::stoi(token);
+    if (type_value < INT || type_value > STORE) {
+        return false;
+    }
+    inst.type = static_cast<InstType>(type_value);
 
     inst.dep_pc.clear();
+    inst.dep_indices.clear();
     while (std::getline(ss, token, ',')) {
         if (!token.empty()) {
             inst.dep_pc.push_back(std::stoull(token, nullptr, 16));
         }
     }
+
+    inst.dynamic_index = -1;
+    inst.cycle_if = -1;
+    inst.cycle_id = -1;
+    inst.cycle_ex = -1;
+    inst.cycle_mem = -1;
+    inst.cycle_wb = -1;
+    inst.ex_cycles = 1;
+    inst.mem_cycles = 1;
 
     return true;
 }

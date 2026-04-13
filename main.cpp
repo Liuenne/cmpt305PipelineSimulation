@@ -5,6 +5,7 @@
 #include "trace.h"
 #include <iostream>
 #include <string>
+#include <simulator.h>
 
 // prints how to use the program if arguments are wrong
 void print_usage(const char* program) {

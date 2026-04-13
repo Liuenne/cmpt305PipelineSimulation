@@ -23,13 +23,15 @@ struct HazardState {
     bool fetch_blocked = false;
     int fetch_resume_cycle = 0;
 
-    // Maps PC to the ready cycle of the most recent dynamic instance.
-    std::unordered_map<uint64_t, int> last_ready_cycle;
+    // Maps a dynamic instruction index to the cycle when it became ready.
+    std::unordered_map<long long, int> ready_cycle_by_index;
 };
 
 void reset_structural_hazards(HazardState& state);
 
 bool can_fetch(const HazardState& state, int cycle);
+
+void block_fetch_until_branch_resolves(HazardState& state);
 
 bool dependencies_ready(const instruction& inst, const HazardState& state, int cycle);
 

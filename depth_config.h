@@ -11,6 +11,8 @@ double get_freq(int D) {
 }
 
 void depth_config(instruction& inst, int D) {
+    inst.ex_cycles = 1;
+    inst.mem_cycles = 1;
     if (inst.type == FP && (D == 2 || D == 4)) {
         inst.ex_cycles = 2;
     }

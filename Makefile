@@ -1,8 +1,8 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -O2 -Wall -Wextra
 
-proj: main.cpp stat.h instruction.h depth_config.h
-	$(CXX) $(CXXFLAGS) -o proj main.cpp 
+proj: main.cpp trace.cpp hazard.cpp instruction.h stat.h depth_config.h trace.h hazard.h
+	$(CXX) $(CXXFLAGS) -o proj main.cpp trace.cpp hazard.cpp
 
 
 clean:

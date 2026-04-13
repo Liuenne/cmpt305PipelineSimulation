@@ -1,4 +1,7 @@
 #pragma once
+
+#ifndef STAT_H
+#define STAT_H
 #include "instruction.h"
 #include "depth_config.h"
 #include <iostream>
@@ -18,7 +21,7 @@ void record_inst(const instruction& inst, stats& s) {
     }
 }
 
-void finalize_stats(stats& s, int D) {
+void format(stats& s, int D) {
     double freq = get_freq(D);
     double cycle_time = 1.0 / (freq * 1e6);
     s.exec_time = s.total_cycles * cycle_time; //ms
@@ -31,8 +34,8 @@ void print_stats(const stats& s, int D, long long start_inst, long long inst_cou
     std::cout << std::fixed << std::setprecision(4);
     std::cout << "========================================\n";
     std::cout << "D = " << D
-              << "start = " << start_inst
-              << "count = " << inst_count << "\n";
+              << " start = " << start_inst
+              << " count = " << inst_count << "\n";
     std::cout << "Total Cycles: " << s.total_cycles << "\n";
     std::cout << "Exec Time (ms): " << s.exec_time << "\n";
     std::cout << "----------------------------------------\n";
@@ -44,8 +47,9 @@ void print_stats(const stats& s, int D, long long start_inst, long long inst_cou
 
     std::cout << "INT: " << s.count[INT]    << "(" << 100.0 * s.count[INT]    / total << "%)\n";
     std::cout << "FP: " << s.count[FP]     << "(" << 100.0 * s.count[FP]     / total << "%)\n";
-    std::cout << "MEM: " << s.count[MEM]    << "(" << 100.0 * s.count[MEM]    / total << "%)\n";
+    std::cout << "BRANCH: " << s.count[BRANCH] << "(" << 100.0 * s.count[BRANCH] / total << "%)\n";
     std::cout << "LOAD: " << s.count[LOAD]   << "(" << 100.0 * s.count[LOAD]   / total << "%)\n";
     std::cout << "STORE: " << s.count[STORE]  << "(" << 100.0 * s.count[STORE]  / total << "%)\n";
     std::cout << "========================================\n";
 }
+#endif

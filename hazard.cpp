@@ -18,13 +18,17 @@ void reset_structural_hazards(HazardState& state) {
 }
 
 bool can_fetch(const HazardState& state, int cycle) {
-    return cycle >= state.fetch_resume_cycle;
+    return !state.fetch_blocked && cycle >= state.fetch_resume_cycle;
+}
+
+void block_fetch_until_branch_resolves(HazardState& state) {
+    state.fetch_blocked = true;
 }
 
 bool dependencies_ready(const instruction& inst, const HazardState& state, int cycle) {
-    for (uint64_t dep_pc : inst.dep_pc) {
-        auto it = state.last_ready_cycle.find(dep_pc);
-        if (it != state.last_ready_cycle.end() && it->second >= cycle) {
+    for (long long dep_index : inst.dep_indices) {
+        auto it = state.ready_cycle_by_index.find(dep_index);
+        if (it == state.ready_cycle_by_index.end() || it->second >= cycle) {
             return false;
         }
     }
@@ -72,9 +76,12 @@ void reserve_mem_port(const instruction& inst, HazardState& state) {
 }
 
 void mark_instruction_ready(const instruction& inst, HazardState& state, int ready_cycle) {
-    state.last_ready_cycle[inst.pc] = ready_cycle;
+    if (inst.dynamic_index >= 0) {
+        state.ready_cycle_by_index[inst.dynamic_index] = ready_cycle;
+    }
 }
 
 void mark_branch_resolved(HazardState& state, int ex_finish_cycle) {
+    state.fetch_blocked = false;
     state.fetch_resume_cycle = ex_finish_cycle + 1;
 }

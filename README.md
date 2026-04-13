@@ -10,7 +10,7 @@ make proj
 ---
 ## How to run
 ```
-./proj <trace_file><start_inst><inst_count><D>
+./proj <trace_file> <start_inst> <inst_count> <D>
 ```
 
 | Argument | Description |
@@ -22,5 +22,18 @@ make proj
 
 Example:
 ```
-./proj srv_0 10000000 1000000 2
+./proj traces/srv_0 10000000 1000000 2
+```
+
+## Batch Experiments
+To help with the 72 required runs, you can use:
+```bash
+./run_experiments.sh
+```
+
+This writes a tab-separated summary into the `results/` directory. By default it
+uses the three provided traces, the six required starting points, and
+`inst_count=1000000`. You can override the trace directory if needed:
+```bash
+TRACE_DIR=/path/to/traces ./run_experiments.sh
 ```

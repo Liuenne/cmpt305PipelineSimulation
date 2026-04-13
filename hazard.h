@@ -24,7 +24,7 @@ struct HazardState {
     int fetch_resume_cycle = 0;
 
     // Maps a dynamic instruction index to the cycle when it became ready.
-    std::unordered_map<long long, int> ready_cycle_by_index;
+    std::unordered_map<long long, int> last_ready_cycle;
 };
 
 void reset_structural_hazards(HazardState& state);

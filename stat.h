@@ -8,12 +8,12 @@
 #include <iomanip>
 
 struct stats {
-    long long total_cycles;
+    long long total_cycles = 0;
     double exec_time = 0.0; //ms
     int count[6] = {0}; //count of each instruction type
 };
 
-void record_inst(const instruction& inst, stats& s) {
+inline void record_inst(const instruction& inst, stats& s) {
     s.count[inst.type]++;
 
     if (inst.cycle_wb + 1 > s.total_cycles) {
@@ -21,22 +21,26 @@ void record_inst(const instruction& inst, stats& s) {
     }
 }
 
+<<<<<<< HEAD
 void format(stats& s, int D) {
+=======
+inline void finalize_stats(stats& s, int D) {
+>>>>>>> b2c1d25 (refine stats output and execution time calculation)
     double freq = get_freq(D);
-    double cycle_time = 1.0 / (freq * 1e6);
-    s.exec_time = s.total_cycles * cycle_time; //ms
+    double cycle_time_seconds = 1.0 / (freq * 1e9);
+    s.exec_time = s.total_cycles * cycle_time_seconds * 1e3; // ms
 }
 
-void print_stats(const stats& s, int D, long long start_inst, long long inst_count) {
+inline void print_stats(const stats& s, int D, long long start_inst, long long inst_count) {
     long long total = 0;
     for (int i = 1; i <= 5; i++) total += s.count[i];
 
-    std::cout << std::fixed << std::setprecision(4);
     std::cout << "========================================\n";
     std::cout << "D = " << D
               << " start = " << start_inst
               << " count = " << inst_count << "\n";
     std::cout << "Total Cycles: " << s.total_cycles << "\n";
+    std::cout << std::fixed << std::setprecision(6);
     std::cout << "Exec Time (ms): " << s.exec_time << "\n";
     std::cout << "----------------------------------------\n";
 
@@ -45,6 +49,7 @@ void print_stats(const stats& s, int D, long long start_inst, long long inst_cou
         return;
     }
 
+    std::cout << std::fixed << std::setprecision(4);
     std::cout << "INT: " << s.count[INT]    << "(" << 100.0 * s.count[INT]    / total << "%)\n";
     std::cout << "FP: " << s.count[FP]     << "(" << 100.0 * s.count[FP]     / total << "%)\n";
     std::cout << "BRANCH: " << s.count[BRANCH] << "(" << 100.0 * s.count[BRANCH] / total << "%)\n";
@@ -52,4 +57,7 @@ void print_stats(const stats& s, int D, long long start_inst, long long inst_cou
     std::cout << "STORE: " << s.count[STORE]  << "(" << 100.0 * s.count[STORE]  / total << "%)\n";
     std::cout << "========================================\n";
 }
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> b2c1d25 (refine stats output and execution time calculation)

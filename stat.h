@@ -2,6 +2,7 @@
 
 #ifndef STAT_H
 #define STAT_H
+
 #include "instruction.h"
 #include "depth_config.h"
 #include <iostream>
@@ -21,11 +22,7 @@ inline void record_inst(const instruction& inst, stats& s) {
     }
 }
 
-<<<<<<< HEAD
-void format(stats& s, int D) {
-=======
 inline void finalize_stats(stats& s, int D) {
->>>>>>> b2c1d25 (refine stats output and execution time calculation)
     double freq = get_freq(D);
     double cycle_time_seconds = 1.0 / (freq * 1e9);
     s.exec_time = s.total_cycles * cycle_time_seconds * 1e3; // ms
@@ -57,7 +54,4 @@ inline void print_stats(const stats& s, int D, long long start_inst, long long i
     std::cout << "STORE: " << s.count[STORE]  << "(" << 100.0 * s.count[STORE]  / total << "%)\n";
     std::cout << "========================================\n";
 }
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> b2c1d25 (refine stats output and execution time calculation)

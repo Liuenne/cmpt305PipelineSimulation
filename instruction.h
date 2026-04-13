@@ -4,9 +4,6 @@
 #include <cstdint>
 #include <vector>
 
-#ifndef PIPELINE_H
-#define PIPELINE_H
-
 enum InstType { INT=1, FP=2, BRANCH=3, LOAD=4, STORE=5 };
 
 struct instruction {
